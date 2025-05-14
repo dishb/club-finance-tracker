@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import ThemeProvider from "@/components/themeProvider";
-import ThemeToggle from "@/components/themeToggle";
+import ThemeToggle from "@/components/ThemeToggle";
+import ThemeProvider from "@/components/ThemeProvider";
+import { Separator } from "@/components/ui/separator";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -22,10 +23,14 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ThemeToggle />
-
           <div className="flex flex-col min-h-screen">
-            {/* Navbar goes here */}
+            <div className="flex flex-col">
+              <div className="flex justify-between p-4 items-center">
+                <h2 className="text-xl">Club Finance Tracker</h2>
+                <ThemeToggle />
+              </div>
+              <Separator />
+            </div>
             <main className="flex-1 flex flex-col">{children}</main>
           </div>
           {/* Footer goes here */}
