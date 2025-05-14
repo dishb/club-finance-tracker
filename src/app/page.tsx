@@ -3,6 +3,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Upload } from "lucide-react";
+import DataTable from "@/components/DataTable";
 import { useState } from "react";
 
 export default function Home() {
@@ -23,13 +24,15 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="flex flex-col items-center mt-10">
+    <div className="flex flex-col items-center justify-center">
+      <div className="flex flex-col items-center mt-10 w-[80%]">
         <Input type="file" onChange={handleFileChange} />
         <Button className="mt-4" onClick={sendToBackend}>
           <Upload />
           Upload
         </Button>
+
+        <DataTable />
       </div>
     </div>
   );
