@@ -1,4 +1,4 @@
-import ReceiptItem from "@/types/receiptItem";
+import type ReceiptItem from "@/types/receiptItem";
 
 const data: ReceiptItem[] = [
   {

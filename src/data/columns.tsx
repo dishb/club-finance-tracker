@@ -1,5 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
-import ReceiptItem from "@/types/receiptItem";
+import { type ColumnDef } from "@tanstack/react-table";
+import type ReceiptItem from "@/types/receiptItem";
 
 const columns: ColumnDef<ReceiptItem>[] = [
   {

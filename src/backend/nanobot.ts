@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import FormData from "form-data";
 import axios from "axios";
 import express from "express";
-import MulterRequest from "@/types/multerRequest";
-import OcrResponse from "@/types/ocrResponse";
-import ReceiptItem from "@/types/receiptItem";
+import type MulterRequest from "@/types/multerRequest";
+import type OcrResponse from "@/types/ocrResponse";
+import type ReceiptItem from "@/types/receiptItem";
 
 dotenv.config();
 
