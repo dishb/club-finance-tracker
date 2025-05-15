@@ -1,8 +1,6 @@
-export default interface ReceiptItem{
-    text: string;
-    subtotal: number;
-    tax: number;
-    total: number;
-    date: Date;
-    vendor: string;
+export default interface ReceiptItem {
+  name: string; // merchant
+  quantity: number;
+  price: number; // subtotal
+  total?: number; // total
 }
