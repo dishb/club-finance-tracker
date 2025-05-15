@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import DataTable from "@/components/DataTable";
 import { useState } from "react";
-import Header from "@/components/Header";
 import { Label } from "@/components/ui/label";
 
 export default function Home() {
