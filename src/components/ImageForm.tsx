@@ -1,58 +1,51 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
+import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
+import axios from "axios";
 
-const formSchema = z.object({
-  receipt: z.any(),
-});
+export default function ImageForm() {
+  const [file, setFile] = useState<File | null>(null);
 
-export function ImageForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      receipt: "",
-    },
-  });
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setFile(file);
+    }
+  };
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onClick() {
+    const formData = {
+      stream: file?.stream,
+      fileName: file?.name,
+    };
+    try {
+      const res = await axios.post("/api/upload-receipt", formData);
+      console.log("Success posting to the API endpoint.");
+    } catch (error: any) {
+      console.error("Error posting to the API endpoint.", error);
+    }
+
+    //TODO: Implement our MongoDB database and then update the database here.
   }
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="receipt"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Receipt</FormLabel>
-              <FormControl>
-                <Input type="file" {...field} />
-              </FormControl>
-              <FormDescription>Upload an image of a receipt.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button type="submit">
-          <Upload /> Upload
-        </Button>
-      </form>
-    </Form>
+    <div className="flex flex-col">
+      <Label className="text-2xl mb-4">Upload a receipt:</Label>
+
+      <Input
+        className="max-w-80 hover:cursor-pointer"
+        type="file"
+        onChange={onChange}
+      />
+
+      <Button className="mt-4 hover:cursor-pointer" onClick={onClick}>
+        <Upload />
+        Upload
+      </Button>
+    </div>
   );
 }

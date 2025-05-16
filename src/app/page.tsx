@@ -1,4 +1,4 @@
-import { ImageForm } from "@/components/ImageForm";
+import ImageForm from "@/components/ImageForm";
 import DataTable from "@/components/DataTable";
 
 export default function Home() {

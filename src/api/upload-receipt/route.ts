@@ -7,8 +7,11 @@ export async function POST(req: Request) {
     apiKey: "f7f59e8b3667f25e88ca8e1ef1fe0a26",
   });
 
-  //TODO: Finish implementing Mindee's API for OCR inference.
-  const inputSource = mindeeClient.docFromBuffer();
+  //! Error: Fix the form data for the Mindee integration, there is an error on line 12.
+  const inputSource = mindeeClient.docFromStream(
+    formData.get("stream"),
+    formData.get("fileName"),
+  );
 
   const res = mindeeClient
     .parse(mindee.product.ReceiptV5, inputSource)
