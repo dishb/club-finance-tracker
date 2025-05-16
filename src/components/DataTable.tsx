@@ -14,13 +14,56 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import DataTableProps from "@/types/dataTableProps";
 import { Button } from "@/components/ui/button";
 
-export default function DataTable<TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) {
+import { type ColumnDef } from "@tanstack/react-table";
+import Purchase from "@/types/purchase";
+
+const columns: ColumnDef<Purchase>[] = [
+  {
+    accessorKey: "merchant",
+    header: "Merchant",
+  },
+  {
+    accessorKey: "total",
+    header: () => <div className="text-right">Total</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("total"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="text-right">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "tax",
+    header: () => <div className="text-right">Tax</div>,
+    cell: ({ row }) => {
+      const amount = parseFloat(row.getValue("tax"));
+      const formatted = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(amount);
+
+      return <div className="text-right">{formatted}</div>;
+    },
+  },
+  {
+    accessorKey: "date",
+    header: "Date",
+  },
+  {
+    accessorKey: "time",
+    header: "Time",
+  },
+];
+
+//TODO: Replace hardcoded data (an array) with database integration.
+const data: Purchase[] = [];
+
+export default function DataTable() {
   const table = useReactTable({
     data,
     columns,
