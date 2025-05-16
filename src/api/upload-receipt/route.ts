@@ -7,11 +7,8 @@ export async function POST(req: Request) {
     apiKey: "f7f59e8b3667f25e88ca8e1ef1fe0a26",
   });
 
-  //! Error: Fix the form data for the Mindee integration, there is an error on line 12.
-  const inputSource = mindeeClient.docFromStream(
-    formData.get("stream"),
-    formData.get("fileName"),
-  );
+  //TODO: Setup Minee client's input source.
+  const inputSource = mindeeClient.docFromPath();
 
   const res = mindeeClient
     .parse(mindee.product.ReceiptV5, inputSource)

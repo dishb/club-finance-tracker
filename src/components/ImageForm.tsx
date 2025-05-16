@@ -18,10 +18,8 @@ export default function ImageForm() {
   };
 
   async function onClick() {
-    const formData = {
-      stream: file?.stream,
-      fileName: file?.name,
-    };
+    //TODO: Setup form data to send.
+    const formData = {};
     try {
       const res = await axios.post("/api/upload-receipt", formData);
       console.log("Success posting to the API endpoint.");
