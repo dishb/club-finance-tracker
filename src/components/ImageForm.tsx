@@ -5,7 +5,6 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
-import axios from "axios";
 
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -30,8 +29,13 @@ export default function ImageForm() {
       body: formData,
     });
 
-    //TODO: Implement our MongoDB database and then update the database here.
-    console.log(res);
+    if (!res.ok) {
+      alert("Upload failed");
+      return;
+    }
+
+    const ocrRes = await res.json();
+    console.log(ocrRes);
   }
 
   return (
