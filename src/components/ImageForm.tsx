@@ -5,7 +5,6 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
-import axios from "axios";
 
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -18,16 +17,25 @@ export default function ImageForm() {
   };
 
   async function onClick() {
-    //TODO: Setup form data to send.
-    const formData = {};
-    try {
-      const res = await axios.post("/api/upload-receipt", formData);
-      console.log("Success posting to the API endpoint.");
-    } catch (error: any) {
-      console.error("Error posting to the API endpoint.", error);
+    if (!file) {
+      return;
     }
 
-    //TODO: Implement our MongoDB database and then update the database here.
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload-receipt", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (!res.ok) {
+      alert("Upload failed");
+      return;
+    }
+
+    const ocrRes = await res.json();
+    console.log(ocrRes);
   }
 
   return (
