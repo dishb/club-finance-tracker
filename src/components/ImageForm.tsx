@@ -18,16 +18,20 @@ export default function ImageForm() {
   };
 
   async function onClick() {
-    //TODO: Setup form data to send.
-    const formData = {};
-    try {
-      const res = await axios.post("/api/upload-receipt", formData);
-      console.log("Success posting to the API endpoint.");
-    } catch (error: any) {
-      console.error("Error posting to the API endpoint.", error);
+    if (!file) {
+      return;
     }
 
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const res = await fetch("/api/upload-receipt", {
+      method: "POST",
+      body: formData,
+    });
+
     //TODO: Implement our MongoDB database and then update the database here.
+    console.log(res);
   }
 
   return (
