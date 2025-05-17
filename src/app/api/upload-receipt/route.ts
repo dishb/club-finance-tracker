@@ -9,10 +9,11 @@ export async function POST(req: Request) {
   const arrayBuffer = await file.arrayBuffer();
   const buffer = Buffer.from(arrayBuffer);
   const fileName = file.name;
+  const mindeeAPIKey = process.env.MINDEE_API_KEY;
 
   const url =
     "https://api.mindee.net/v1/products/mindee/expense_receipts/v5/predict";
-  const apiKey = "f7f59e8b3667f25e88ca8e1ef1fe0a26";
+  const apiKey = mindeeAPIKey;
 
   if (!apiKey) {
     return new Response("Mindee API key not set", { status: 500 });
