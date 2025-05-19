@@ -5,6 +5,7 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
+import { toast } from "sonner";
 
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -30,11 +31,12 @@ export default function ImageForm() {
     });
 
     if (!res.ok) {
-      alert("Upload failed");
+      toast("500: Internal server error");
       return;
     }
 
     const ocrRes = await res.json();
+    toast("Image uploaded successfully");
     console.log(ocrRes);
   }
 
