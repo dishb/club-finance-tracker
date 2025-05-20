@@ -5,10 +5,13 @@ import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
-import { toast } from "sonner";
+import Popup from "./Popup";
 
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
+  const [showPopup, setShowPopup] = useState(false);
+  let popupTitle = "";
+  let popupDescription = "";
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -31,12 +34,31 @@ export default function ImageForm() {
     });
 
     if (!res.ok) {
-      toast("500: Internal server error");
+      if (res.status === 404) {
+        popupTitle = "404: Not Found";
+        popupDescription =
+          "The requested resource was not found. Please report this issue to the developers.";
+      } else if (res.status === 500) {
+        popupTitle = "500: Internal Server Error";
+        popupDescription =
+          "An error occurred on the server. Please report this issue to the developers.";
+      } else if (res.status === 429) {
+        popupTitle = "429: Rate Limit Exceeded";
+        popupDescription =
+          "You have exceeded the API rate limit. Please try again later.";
+      } else {
+        popupTitle = "Error while processing file.";
+        popupDescription = "An unknown error occurred. Please report this issue to the developers.";
+      }
+
+      setShowPopup(true);
+      setFile(null);
       return;
     }
 
     const ocrRes = await res.json();
-    toast("Image uploaded successfully");
+
+    //TODO: Replace console.log with database integration.
     console.log(ocrRes);
   }
 
@@ -54,6 +76,14 @@ export default function ImageForm() {
         <Upload />
         Upload
       </Button>
+
+      {showPopup && (
+        <Popup
+          title={popupTitle}
+          description={popupDescription}
+          onClose={() => setShowPopup(false)}
+        />
+      )}
     </div>
   );
 }

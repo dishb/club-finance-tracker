@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import ThemeToggle from "@/components/ThemeToggle";
 import ThemeProvider from "@/components/ThemeProvider";
 import { Separator } from "@/components/ui/separator";
-import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -37,7 +36,6 @@ export default function RootLayout({
             </div>
           </main>
           <footer></footer>
-          <Toaster />
         </ThemeProvider>
       </body>
     </html>
