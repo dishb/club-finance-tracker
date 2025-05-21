@@ -60,7 +60,7 @@ export default function ImageForm() {
 
     const ocrRes = await res.json();
 
-    //TODO: Replace console.log with database integration.
+    //TODO: Replace console.log with database integration (create).
     console.log(ocrRes);
   }
 

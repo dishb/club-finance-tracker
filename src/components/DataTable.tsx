@@ -66,7 +66,7 @@ const columns: ColumnDef<Receipt>[] = [
   },
 ];
 
-//TODO: Replace hardcoded data (an array) with database integration.
+//TODO: Replace hardcoded data with database integration (read).
 const data: Receipt[] = receiptData;
 
 export default function DataTable() {
