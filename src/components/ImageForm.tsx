@@ -34,6 +34,9 @@ export default function ImageForm() {
     });
 
     if (!res.ok) {
+      setShowPopup(true);
+      setFile(null);
+
       if (res.status === 404) {
         popupTitle = "404: Not Found";
         popupDescription =
@@ -48,11 +51,10 @@ export default function ImageForm() {
           "You have exceeded the API rate limit. Please try again later.";
       } else {
         popupTitle = "Error while processing file.";
-        popupDescription = "An unknown error occurred. Please report this issue to the developers.";
+        popupDescription =
+          "An unknown error occurred. Please report this issue to the developers.";
       }
 
-      setShowPopup(true);
-      setFile(null);
       return;
     }
 
