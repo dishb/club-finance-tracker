@@ -15,11 +15,11 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-
+import receiptData from "@/data/receiptData";
 import { type ColumnDef } from "@tanstack/react-table";
-import Purchase from "@/types/purchase";
+import Receipt from "@/types/receipt";
 
-const columns: ColumnDef<Purchase>[] = [
+const columns: ColumnDef<Receipt>[] = [
   {
     accessorKey: "merchant",
     header: "Merchant",
@@ -53,15 +53,21 @@ const columns: ColumnDef<Purchase>[] = [
   {
     accessorKey: "date",
     header: "Date",
-  },
-  {
-    accessorKey: "time",
-    header: "Time",
+    cell: ({row}) => {
+      const date = new Date(row.getValue("date"));
+      const formattedDate = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(date);
+
+      return <div>{formattedDate}</div>;
+    }
   },
 ];
 
-//TODO: Replace hardcoded data (an array) with database integration.
-const data: Purchase[] = [];
+//TODO: Replace hardcoded data with database integration (read).
+const data: Receipt[] = receiptData;
 
 export default function DataTable() {
   const table = useReactTable({
