@@ -16,55 +16,8 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import receiptData from "@/data/receiptData";
-import { type ColumnDef } from "@tanstack/react-table";
-import Receipt from "@/types/receipt";
-
-const columns: ColumnDef<Receipt>[] = [
-  {
-    accessorKey: "merchant",
-    header: "Merchant",
-  },
-  {
-    accessorKey: "total",
-    header: () => <div className="text-right">Total</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("total"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "tax",
-    header: () => <div className="text-right">Tax</div>,
-    cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("tax"));
-      const formatted = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-      }).format(amount);
-
-      return <div className="text-right">{formatted}</div>;
-    },
-  },
-  {
-    accessorKey: "date",
-    header: "Date",
-    cell: ({row}) => {
-      const date = new Date(row.getValue("date"));
-      const formattedDate = new Intl.DateTimeFormat("en-US", {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-      }).format(date);
-
-      return <div>{formattedDate}</div>;
-    }
-  },
-];
+import columns from "@/data/column";
+import type Receipt from "@/types/receipt";
 
 //TODO: Replace hardcoded data with database integration (read).
 const data: Receipt[] = receiptData;

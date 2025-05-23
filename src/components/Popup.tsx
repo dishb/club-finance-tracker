@@ -7,7 +7,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import PopupProps from "@/types/popupProps";
+import type PopupProps from "@/types/popupProps";
 
 export default function Popup({ onClose, title, description }: PopupProps) {
   return (

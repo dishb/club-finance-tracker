@@ -3,4 +3,5 @@ export default interface Receipt {
   total: number;
   tax: number;
   date: Date;
+  time: string;
 }
