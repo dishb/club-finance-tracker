@@ -10,8 +10,8 @@ import Popup from "./Popup";
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
   const [showPopup, setShowPopup] = useState(false);
-  let popupTitle = "";
-  let popupDescription = "";
+  const [popupTitle, setPopupTitle] = useState("");
+  const [popupDescription, setPopupDescription] = useState("");
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -34,26 +34,31 @@ export default function ImageForm() {
     });
 
     if (!res.ok) {
-      setShowPopup(true);
       setFile(null);
 
       if (res.status === 404) {
-        popupTitle = "404: Not Found";
-        popupDescription =
-          "The requested resource was not found. Please report this issue to the developers.";
+        setPopupTitle("404: Not Found");
+        setPopupDescription(
+          "The requested resource was not found. Please report this issue to the developers."
+        );
       } else if (res.status === 500) {
-        popupTitle = "500: Internal Server Error";
-        popupDescription =
-          "An error occurred on the server. Please report this issue to the developers.";
+        setPopupTitle("500: Internal Server Error");
+        setPopupDescription(
+          "An error occurred on the server. Please report this issue to the developers."
+        );
       } else if (res.status === 429) {
-        popupTitle = "429: Rate Limit Exceeded";
-        popupDescription =
-          "You have exceeded the API rate limit. Please try again later.";
+        setPopupTitle("429: Rate Limit Exceeded");
+        setPopupDescription(
+          "You have exceeded the API rate limit. Please try again later."
+        );
       } else {
-        popupTitle = "Error while processing file.";
-        popupDescription =
-          "An unknown error occurred. Please report this issue to the developers.";
+        setPopupTitle("Error while processing file.");
+        setPopupDescription(
+          "An unknown error occurred. Please report this issue to the developers."
+        );
       }
+
+      setShowPopup(true);
 
       return;
     }
