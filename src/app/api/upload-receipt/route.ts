@@ -1,3 +1,7 @@
+import ReceiptModel from "@/models/ReceiptModel";
+import dbConnect from "@/lib/dbConnect";
+import { NextResponse } from "next/server";
+
 export async function POST(req: Request) {
   const formData = await req.formData();
   const file = formData.get("file") as File;
@@ -37,7 +41,21 @@ export async function POST(req: Request) {
     });
   }
 
-  const res = await mindeeRes.json();
+  const ocrRes = await mindeeRes.json();
 
-  return Response.json(res.document.inference.prediction);
+  await dbConnect();
+
+  try {
+    await ReceiptModel.create({
+      total: ocrRes.total_amount.value,
+      tax: ocrRes.total_tax.value,
+      date: ocrRes.date.value,
+      merchant: ocrRes.supplier_name.value,
+      time: ocrRes.time.value,
+    });
+    return NextResponse.json("Success", { status: 200 });
+  } catch (err: any) {
+    console.error("Error saving receipt", err);
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
 }

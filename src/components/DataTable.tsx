@@ -15,14 +15,25 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import receiptData from "@/data/receiptData";
 import columns from "@/data/column";
 import type Receipt from "@/types/receipt";
-
-//TODO: Replace hardcoded data with database integration (read).
-const data: Receipt[] = receiptData;
+import { useState, useEffect } from "react";
 
 export default function DataTable() {
+  const [data, setData] = useState<Receipt[]>([]);
+
+  const fetchReceipts = async () => {
+    const res = await fetch("/api/get-receipts");
+    const receipts = await res.json();
+    return receipts;
+  };
+
+  useEffect(() => {
+    fetchReceipts().then((receipts) => {
+      setData(receipts);
+    });
+  }, []);
+
   const table = useReactTable({
     data,
     columns,

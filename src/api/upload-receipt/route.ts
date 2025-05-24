@@ -1,6 +1,6 @@
 import { processReceipt, validateReceipt } from "./mindeetrying";
 import connectDB from "@/lib/mongodb";
-import { Receipt } from "@/models/Receipt";
+import { Receipt } from "@/models/ReceiptModel";
 import { writeFile } from "fs/promises";
 import { join } from "path";
 
@@ -10,10 +10,7 @@ export async function POST(req: Request) {
     const file = formData.get("file") as File;
 
     if (!file) {
-      return Response.json(
-        { error: "No file provided" },
-        { status: 400 }
-      );
+      return Response.json({ error: "No file provided" }, { status: 400 });
     }
 
     // Process the receipt using Mindee
@@ -31,7 +28,7 @@ export async function POST(req: Request) {
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
     const fileName = `${Date.now()}-${file.name}`;
-    const path = join(process.cwd(), 'public', 'receipts', fileName);
+    const path = join(process.cwd(), "public", "receipts", fileName);
     await writeFile(path, buffer);
 
     // Connect to MongoDB
@@ -51,4 +48,4 @@ export async function POST(req: Request) {
       { status: 500 }
     );
   }
-} 
+}

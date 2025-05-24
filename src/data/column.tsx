@@ -65,6 +65,10 @@ const columns: ColumnDef<Receipt>[] = [
       return <div>{formattedDate}</div>;
     },
   },
+  {
+    accessorKey: "id",
+    header: "ID",
+  },
 ];
 
 export default columns;

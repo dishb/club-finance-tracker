@@ -6,7 +6,6 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { Upload } from "lucide-react";
 import Popup from "./Popup";
-import { set } from "react-hook-form";
 
 export default function ImageForm() {
   const [file, setFile] = useState<File | null>(null);
@@ -69,18 +68,7 @@ export default function ImageForm() {
       return;
     }
 
-    const ocrRes = await res.json();
-
-    // * Mr. Thai's suggestion:
-    // * Admin portal for viewing every clubs' purchases.
-    // * Allow user to manually override the OCR results.
-    // * Store original image of receipt in database.
-    // TODO: Replace console.log with database integration (create).
-    console.log(ocrRes.total_amount.value);
-    console.log(ocrRes.total_tax.value);
-    console.log(ocrRes.date.value);
-    console.log(ocrRes.supplier_name.value);
-    console.log(ocrRes.time.value);
+    return;
   }
 
   return (
