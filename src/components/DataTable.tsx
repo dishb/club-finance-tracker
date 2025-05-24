@@ -32,6 +32,12 @@ export default function DataTable() {
     fetchReceipts().then((receipts) => {
       setData(receipts);
     });
+
+    setInterval(() => {
+      fetchReceipts().then((receipts) => {
+        setData(receipts);
+      });
+    }, 1000);
   }, []);
 
   const table = useReactTable({

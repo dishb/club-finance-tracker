@@ -42,7 +42,6 @@ const columns: ColumnDef<Receipt>[] = [
       if (typeof time === "string" && /^\d{2}:\d{2}$/.test(time)) {
         const [hourStr, minuteStr] = time.split(":");
         let hour = parseInt(hourStr, 10);
-        const minute = parseInt(minuteStr, 10);
         const ampm = hour >= 12 ? "PM" : "AM";
         hour = hour % 12 || 12;
         formattedTime = `${hour}:${minuteStr} ${ampm}`;
@@ -64,10 +63,6 @@ const columns: ColumnDef<Receipt>[] = [
 
       return <div>{formattedDate}</div>;
     },
-  },
-  {
-    accessorKey: "id",
-    header: "ID",
   },
 ];
 

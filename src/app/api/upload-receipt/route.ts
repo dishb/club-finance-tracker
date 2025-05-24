@@ -41,7 +41,8 @@ export async function POST(req: Request) {
     });
   }
 
-  const ocrRes = await mindeeRes.json();
+  const res = await mindeeRes.json();
+  const ocrRes = res.document.inference.prediction;
 
   await dbConnect();
 
@@ -55,7 +56,6 @@ export async function POST(req: Request) {
     });
     return NextResponse.json("Success", { status: 200 });
   } catch (err: any) {
-    console.error("Error saving receipt", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
