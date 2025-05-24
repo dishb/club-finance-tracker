@@ -36,18 +36,15 @@ export default function ImageForm() {
 
       return;
     } else if (
-      !(
-        file.type in
-        [
-          "image/png",
-          "image/jpeg",
-          "image/gif",
-          "image/webp",
-          "image/tiff",
-          "image/heic",
-          "application/pdf",
-        ]
-      )
+      ![
+        "image/png",
+        "image/jpeg",
+        "image/gif",
+        "image/webp",
+        "image/tiff",
+        "image/heic",
+        "application/pdf",
+      ].includes(file.type)
     ) {
       createPopup(
         "Invalid file type",
