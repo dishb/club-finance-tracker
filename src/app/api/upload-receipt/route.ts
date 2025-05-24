@@ -55,7 +55,7 @@ export async function POST(req: Request) {
       time: ocrRes.time.value,
     });
     return NextResponse.json("Success", { status: 200 });
-  } catch (err: any) {
+  } catch (err) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
