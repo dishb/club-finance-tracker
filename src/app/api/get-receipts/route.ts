@@ -8,7 +8,7 @@ export async function GET() {
   try {
     const receipts = await ReceiptModel.find({});
     return NextResponse.json(receipts, { status: 200 });
-  } catch (err) {
+  } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
