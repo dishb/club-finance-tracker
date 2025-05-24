@@ -21,13 +21,38 @@ export default function ImageForm() {
     }
   };
 
+  function createPopup(title: string, description: string) {
+    setPopupTitle(title);
+    setPopupDescription(description);
+    setShowPopup(true);
+  }
+
   async function onClick() {
     if (!file) {
-      setPopupTitle("No file selected");
-      setPopupDescription(
+      createPopup(
+        "No file selected",
         "Please select a file to upload before clicking the upload button."
       );
-      setShowPopup(true);
+
+      return;
+    } else if (
+      !(
+        file.type in
+        [
+          "image/png",
+          "image/jpeg",
+          "image/gif",
+          "image/webp",
+          "image/tiff",
+          "image/heic",
+          "application/pdf",
+        ]
+      )
+    ) {
+      createPopup(
+        "Invalid file type",
+        "Please upload a valid image file (PNG, JPEG, WEBP, TIFF, HEIC, or PDF)."
+      );
 
       return;
     }
@@ -44,30 +69,26 @@ export default function ImageForm() {
 
     if (!res.ok) {
       if (res.status === 404) {
-        setPopupTitle("404: Not Found");
-        setPopupDescription(
+        createPopup(
+          "404: Not Found",
           "The requested resource was not found. Please report this issue to the developers."
         );
       } else if (res.status === 500) {
-        setPopupTitle("500: Internal Server Error");
-        setPopupDescription(
+        createPopup(
+          "500: Internal Server Error",
           "An error occurred on the server. Please report this issue to the developers."
         );
       } else if (res.status === 429) {
-        setPopupTitle("429: Rate Limit Exceeded");
-        setPopupDescription(
+        createPopup(
+          "429: Rate Limit Exceeded",
           "You have exceeded the API rate limit. Please try again later."
         );
       } else {
-        setPopupTitle("Error while processing file.");
-        setPopupDescription(
-          "An unknown error occurred. Please report this issue to the developers."
+        createPopup(
+          `Error while processing file`,
+          "An error occurred while processing your request. Please report this issue to the developers."
         );
       }
-
-      setShowPopup(true);
-      setLoading(false);
-      return;
     }
 
     setLoading(false);
@@ -89,11 +110,7 @@ export default function ImageForm() {
         onClick={onClick}
         disabled={loading}
       >
-        {loading ? (
-          <LoaderCircle className="animate-spin" />
-        ) : (
-          <Upload />
-        )}
+        {loading ? <LoaderCircle className="animate-spin" /> : <Upload />}
         {loading ? "Uploading..." : "Upload"}
       </Button>
 
