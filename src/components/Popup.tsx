@@ -23,7 +23,9 @@ export default function Popup({ onClose, title, description }: PopupProps) {
           <AlertDialogDescription>{description}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClose}>Close</AlertDialogAction>
+          <AlertDialogAction onClick={onClose} className="hover:cursor-pointer">
+            Close
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

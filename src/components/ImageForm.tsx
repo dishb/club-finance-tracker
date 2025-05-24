@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
-import { Upload } from "lucide-react";
+import { Upload, LoaderCircle } from "lucide-react";
 import Popup from "./Popup";
 
 export default function ImageForm() {
@@ -12,6 +12,7 @@ export default function ImageForm() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupTitle, setPopupTitle] = useState("");
   const [popupDescription, setPopupDescription] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -27,8 +28,11 @@ export default function ImageForm() {
         "Please select a file to upload before clicking the upload button."
       );
       setShowPopup(true);
+
       return;
     }
+
+    setLoading(true);
 
     const formData = new FormData();
     formData.append("file", file);
@@ -39,8 +43,6 @@ export default function ImageForm() {
     });
 
     if (!res.ok) {
-      setFile(null);
-
       if (res.status === 404) {
         setPopupTitle("404: Not Found");
         setPopupDescription(
@@ -64,10 +66,11 @@ export default function ImageForm() {
       }
 
       setShowPopup(true);
-
+      setLoading(false);
       return;
     }
 
+    setLoading(false);
     return;
   }
 
@@ -81,9 +84,17 @@ export default function ImageForm() {
         onChange={onChange}
       />
 
-      <Button className="mt-4 hover:cursor-pointer" onClick={onClick}>
-        <Upload />
-        Upload
+      <Button
+        className="mt-4 hover:cursor-pointer"
+        onClick={onClick}
+        disabled={loading}
+      >
+        {loading ? (
+          <LoaderCircle className="animate-spin" />
+        ) : (
+          <Upload />
+        )}
+        {loading ? "Uploading..." : "Upload"}
       </Button>
 
       {showPopup && (

@@ -18,15 +18,10 @@ import { Button } from "@/components/ui/button";
 import columns from "@/data/column";
 import type Receipt from "@/types/receipt";
 import { useState, useEffect } from "react";
+import fetchReceipts from "@/lib/fetchReceipts";
 
 export default function DataTable() {
   const [data, setData] = useState<Receipt[]>([]);
-
-  const fetchReceipts = async () => {
-    const res = await fetch("/api/get-receipts");
-    const receipts = await res.json();
-    return receipts;
-  };
 
   useEffect(() => {
     fetchReceipts().then((receipts) => {
@@ -37,7 +32,7 @@ export default function DataTable() {
       fetchReceipts().then((receipts) => {
         setData(receipts);
       });
-    }, 1000);
+    }, 5000);
   }, []);
 
   const table = useReactTable({
