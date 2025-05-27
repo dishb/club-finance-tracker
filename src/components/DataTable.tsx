@@ -32,7 +32,7 @@ export default function DataTable() {
       fetchReceipts().then((receipts) => {
         setData(receipts);
       });
-    }, 5000);
+    }, 1000);
   }, []);
 
   const table = useReactTable({
